@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ store.get('store_name','NovaStore') }} — Modern Online Shopping{% endblock %}
+{% block content %}
+<section class="hero">
+  {% for b in banners %}
+  <div class="hero-slide {% if loop.first %}active{% endif %}" style="background-image:linear-gradient(90deg,rgba(10,14,25,.82),rgba(10,14,25,.18)),url('{{ b.image_url }}')">
+    <div class="container hero-content"><span class="eyebrow">NEW SEASON</span><h1>{{ b.title }}</h1><p>{{ b.subtitle }}</p><a class="btn btn-primary" href="{{ b.button_link }}">{{ b.button_text }}</a></div>
+  </div>
+  {% else %}
+  <div class="hero-slide active"><div class="container hero-content"><span class="eyebrow">WELCOME</span><h1>Everything you need, in one place.</h1><p>Discover quality products with simple Cash on Delivery.</p><a class="btn btn-primary" href="{{ url_for('shop') }}">Shop Now</a></div></div>
+  {% endfor %}
+</section>
+
+<section class="container section"><div class="section-head"><div><span class="eyebrow">CURATED FOR YOU</span><h2>Shop by category</h2></div><a class="text-link" href="{{ url_for('shop') }}">View all →</a></div>
+<div class="category-grid">{% for c in categories %}<a class="category-card" href="{{ url_for('shop') }}?category={{ c.slug }}"><span>{{ loop.index|string }}</span><h3>{{ c.name }}</h3><p>Explore collection</p></a>{% endfor %}</div></section>
+
+{% for title, products, label in [('Featured Products', featured, 'FEATURED'),('Best Sellers', best, 'MOST LOVED'),('New Arrivals', newest, 'JUST IN'),('Special Offers', sale, 'SAVE MORE')] %}
+{% if products %}
+<section class="container section"><div class="section-head"><div><span class="eyebrow">{{ label }}</span><h2>{{ title }}</h2></div><a class="text-link" href="{{ url_for('shop') }}">Shop all →</a></div>
+<div class="product-grid">{% for p in products %}{% include '_product_card.html' %}{% endfor %}</div></section>
+{% endif %}
+{% endfor %}
+
+{% if ads %}
+<section class="container section"><div class="ad-grid">{% for ad in ads %}<article class="ad-card" style="background-image:linear-gradient(90deg,rgba(8,12,20,.8),rgba(8,12,20,.1)),url('{{ ad.image_url }}')"><div><span class="eyebrow">SPECIAL</span><h3>{{ ad.title }}</h3><p>{{ ad.description }}</p><a class="btn btn-light" href="{{ ad.cta_link }}">{{ ad.cta_text }}</a></div></article>{% endfor %}</div></section>
+{% endif %}
+
+<section class="benefits"><div class="container benefit-grid"><div>✓ <strong>Cash on Delivery</strong><span>Easy local checkout</span></div><div>✓ <strong>Quality first</strong><span>Carefully selected products</span></div><div>✓ <strong>Fast support</strong><span>We're here to help</span></div><div>✓ <strong>Secure checkout</strong><span>Protected forms</span></div></div></section>
+{% endblock %}

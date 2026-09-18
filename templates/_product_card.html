@@ -1,0 +1,11 @@
+<article class="product-card">
+  <a class="product-image" href="{{ url_for('product_detail', slug=p.slug) }}">
+    {% if p.images %}<img loading="lazy" src="{{ p.images[0].image_url }}" alt="{{ p.images[0].alt_text or p.name }}">{% else %}<div class="image-placeholder">No image</div>{% endif %}
+    {% if p.discount_price %}<span class="sale-badge">SALE</span>{% endif %}
+  </a>
+  <div class="product-info"><div class="product-meta"><span>{{ p.category.name if p.category else 'Collection' }}</span><button class="icon-btn wishlist-toggle" data-product-id="{{ p.id }}" title="Wishlist">♡</button></div>
+  <h3><a href="{{ url_for('product_detail', slug=p.slug) }}">{{ p.name }}</a></h3>
+  <div class="rating">★ {{ '%.1f'|format(p.rating or 0) }} <small>({{ p.review_count }})</small></div>
+  <div class="price-row"><strong>{{ store.get('currency','৳') }}{{ p.effective_price|money }}</strong>{% if p.discount_price %}<del>{{ store.get('currency','৳') }}{{ p.price|money }}</del>{% endif %}</div>
+  <button class="btn btn-dark add-cart" data-product-id="{{ p.id }}">Add to cart</button></div>
+</article>

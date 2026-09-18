@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Wishlist{% endblock %}
+{% block content %}<section class="page-hero"><div class="container"><span class="eyebrow">SAVED</span><h1>Your wishlist</h1></div></section><section class="container section"><div class="product-grid">{% for row in rows %}{% set p=row.product %}{% include '_product_card.html' %}{% else %}<div class="empty-state"><h2>Nothing saved yet</h2><a class="btn btn-dark" href="{{ url_for('shop') }}">Browse products</a></div>{% endfor %}</div></section>{% endblock %}

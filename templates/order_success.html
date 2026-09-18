@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Order confirmed{% endblock %}
+{% block content %}<section class="container section center"><div class="success-icon">✓</div><span class="eyebrow">ORDER RECEIVED</span><h1>Thank you for your order!</h1><p>Your order number is <strong>{{ order.order_number }}</strong>.</p><p>Payment: Cash on Delivery. Our team will confirm your order shortly.</p><a class="btn btn-dark" href="{{ url_for('shop') }}">Continue shopping</a></section>{% endblock %}

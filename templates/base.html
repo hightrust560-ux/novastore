@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{% block title %}{{ store.get('store_name','NovaStore') }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ store.get('store_description','Modern online shopping.') }}{% endblock %}">
+  <meta property="og:title" content="{{ store.get('store_name','NovaStore') }}">
+  <meta property="og:description" content="{{ store.get('store_description','Modern online shopping.') }}">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="{{ url_for('home') }}">{% if store.get('logo_url') %}<img class="brand-logo" src="{{ store.get('logo_url') }}" alt="{{ store.get('store_name','NovaStore') }}">{% else %}<span class="brand-mark">N</span>{% endif %}<span>{{ store.get('store_name','NovaStore') }}</span></a>
+    <nav class="desktop-nav">
+      <a href="{{ url_for('home') }}">Home</a><a href="{{ url_for('shop') }}">Shop</a>
+      <a href="{{ url_for('shop') }}?sort=newest">New</a><a href="{{ url_for('shop') }}?sort=popular">Best Sellers</a>
+      <a href="{{ url_for('about') }}">About</a><a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+    <form class="header-search" action="{{ url_for('shop') }}"><input name="q" placeholder="Search products..." aria-label="Search products"><button>⌕</button></form>
+    <div class="nav-actions">
+      <a href="{{ url_for('wishlist') }}" title="Wishlist">♡ <span class="count-badge wishlist-count">{{ wishlist_count }}</span></a>
+      <a href="{{ url_for('cart') }}" title="Cart">🛒 <span class="count-badge cart-count">{{ cart_count }}</span></a>
+      <a class="admin-link" href="{{ url_for('admin_login') }}">Admin</a>
+    </div>
+  </div>
+</header>
+<main>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<div class="container flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><h3>{{ store.get('store_name','NovaStore') }}</h3><p>{{ store.get('store_description','Quality products. Simple shopping.') }}</p></div>
+    <div><h4>Quick links</h4><a href="{{ url_for('shop') }}">Shop</a><a href="{{ url_for('faq') }}">FAQ</a><a href="{{ url_for('about') }}">About</a><a href="{{ url_for('contact') }}">Contact</a></div>
+    <div><h4>Contact</h4><p>{{ store.get('address','Dhaka, Bangladesh') }}</p><p>{{ store.get('phone','') }}</p><p>{{ store.get('email','') }}</p></div>
+    <div><h4>Follow</h4><div class="socials"><a href="{{ store.get('facebook','#') }}">Facebook</a><a href="{{ store.get('instagram','#') }}">Instagram</a><a href="{{ store.get('youtube','#') }}">YouTube</a></div></div>
+  </div>
+  <div class="container footer-bottom">© {{ current_year }} {{ store.get('store_name','NovaStore') }}. {{ store.get('footer_text','All rights reserved.') }}</div>
+</footer>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>
