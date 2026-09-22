@@ -929,7 +929,6 @@ def seed():
         db.session.add(Banner(title="Fresh arrivals are here", subtitle="Discover new picks selected for modern living.", image_url="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1800&q=85", button_text="Explore New", button_link="/shop?sort=newest", enabled=True, sort_order=2))
     db.session.commit()
 
-if __name__ == "__main__":
-    with app.app_context():
-        seed()
-    app.run(debug=True, host="127.0.0.1", port=int(os.environ.get("PORT", 5000)))
+with app.app_context():
+    db.create_all()
+    seed()
