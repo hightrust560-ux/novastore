@@ -916,7 +916,7 @@ def seed():
             db.session.add(p); db.session.flush()
             db.session.add(ProductImage(product_id=p.id, image_url=image, alt_text=name, sort_order=0))
     defaults = {
-        "store_name": "NovaStore", "logo_url": "", "store_description": "A modern online store for quality products.",
+        "store_name": "HIGH TRUST", "logo_url": "", "store_description": "A modern online store for quality products.",
         "phone": "+880 1XXXXXXXXX", "email": "hello@example.com", "address": "Dhaka, Bangladesh",
         "facebook": "#", "instagram": "#", "youtube": "#", "footer_text": "Quality products. Simple shopping. Fast delivery.",
         "currency": "৳", "delivery_charge": "60", "free_delivery_minimum": "1500", "minimum_order_amount": "0"
